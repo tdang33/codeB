@@ -7,16 +7,20 @@ password = 'vietnamno1'
 def networth():
     return float(run(user, password, 'MY_CASH').split()[1])
 
-# print networth()
-
 def my_securities():
     return run(user, password, 'MY_SECURITIES').split()
 
 def getdata():
-    return run("vnexpress", "vietnamno1", 'SECURITIES').split()
+    return run(user, password, 'SECURITIES').split()
 
 def setOrder(command):
-    run("vnexpress", "vietnamno1", command)
+    run(user, password, command)
+
+def getOrders(ticker):
+    return run(user, password, 'ORDERS ' + ticker).split()
+
+
+
 # print run("vnexpress", "vietnamno1", 'MY_CASH')
 #
 # print run("vnexpress", "vietnamno1", 'MY_SECURITIES')
