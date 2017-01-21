@@ -5,7 +5,7 @@ user = 'vnexpress'
 password = 'vietnamno1'
 
 def networth():
-    return float(run(user, password, 'MY_CASH').split()[1])
+    return run(user, password, 'MY_CASH').split()[1]
 
 def my_securities():
     return run(user, password, 'MY_SECURITIES').split()

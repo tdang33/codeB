@@ -7,15 +7,26 @@ value = []
 
 cur_orders = [[] for i in range(0, 10)]
 
+# prices[]
+
 myshares = [[0,0]]*10
 
 data = [[] for i in range(0,10)]
 
+dividends = []
+
 # update the networth of my portfolio. Initially, it is $5000.
 def updateNetworth():
-  current_net = networth()
+  current_net = float(networth())
   value.append(current_net)
   # print value
+
+def getStocks():
+    securities = my_securities()
+    if (len(securities) < 30):
+        return
+    for i in range(0, 10):
+        stocks[i] = securities[3*i + 1]
 
 # update the number of shares of each stock in my portfolio
 def updateMySecurities():
@@ -23,10 +34,10 @@ def updateMySecurities():
     if (len(securities) < 30):
         return
     for i in range(0, 10):
-        stocks[i] = securities[3*i + 1]
+        # stocks[i] = securities[3*i + 1]
         myshares[i][0] = float(securities[3*i + 2])
         myshares[i][1] = float(securities[3*i + 3])
-    # print stocks
+    # print myshares
 
 # get networth, dividend, volatility at each second of every stock
 def updateData():
@@ -34,7 +45,7 @@ def updateData():
     if (len(newData) < 30):
         return
     for i in range(0, 10):
-        print newData[4*i + 2]
+        # print newData[4*i + 2]
         value = float(newData[4*i + 2])
         div = float(newData[4*i + 3])
         var = float(newData[4*i + 4])
@@ -42,15 +53,21 @@ def updateData():
     # print data[0]
 
 def updateOrders():
+    # print stocks
     for k in range(0, 10):
+        # print k
         ticker = stocks[k]
+        # print ticker
+        # print ticker
         orders = getOrders(ticker)
         length = len(orders)
         i = 1
         new_orders = [[] for i in range(0, 2)]
         while (i < length):
             trade = orders[i]
-            if (trade not in stocks):
+            stock = orders[i+1]
+            # print trade
+            if (stock not in stocks):
                 return
             price = float(orders[i + 2])
             vol = float(orders[i + 3])
@@ -60,7 +77,8 @@ def updateOrders():
                 new_orders[1].append([price, vol])
             i = i + 4
         cur_orders[k] =  new_orders
-    # print cur_orders
+        # print new_orders
+    print cur_orders[0]
     print
     print
 
@@ -74,6 +92,16 @@ def bid(index, price, share):
 def ask(index, price, share):
     setOrder('ASK ' + str(stocks[index]) + ' ' + str(price) + ' ' + str(share))
 
+
+
+
+
+
+
+
+
+
+
 # update the market data after each t seconds
 def update():
     threading.Timer(1.0, update).start()
@@ -84,12 +112,11 @@ def update():
     # print getOrders(stocks[0])
     print
 
-def trade():
-    return
 
 
 # print getdata()
 # bid(0, 100.5, 10.5)
+getStocks()
 update()
 
 # trade()
